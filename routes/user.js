@@ -31,10 +31,10 @@ app.post('/add', function(req, res, next){
      req.getConnection(function(error, conn) {
             conn.query('INSERT INTO addressbook SET ?', user, function(err, result) {
             	if (err) {
-            		res.send(err);
+            		res.send(JSON.stringify(err));
             	}
         		else{
-        			res.send(JSON.stringify("One user Added"));
+        			res.send(JSON.stringify("success"));
         		}
         	});
         });
@@ -51,8 +51,7 @@ app.get('/view/(:id)', function(req, res, next){
 
 
 app.put('/edit/(:id)', function(req, res, next) {
-    console.log(req.body);
-	var user = {
+   var user = {
         fname: req.body.fname,
         lname: req.body.lname,
         email: req.body.email,
@@ -65,7 +64,7 @@ app.put('/edit/(:id)', function(req, res, next) {
             		res.send(JSON.stringify(err));
             	}
     		else{
-    				res.send(JSON.stringify("record updated"));
+    				res.send(JSON.stringify("success"));
 				}
         });
     });
@@ -76,9 +75,9 @@ app.delete('/delete/(:id)', function(req, res, next) {
 	req.getConnection(function(error, conn) {
         conn.query('DELETE FROM addressbook WHERE id = ?',  req.params.id, function(err, result) {
         	if (err) {
-               res.send(err);
+               res.send(JSON.stringify(err));
             } else {
-            	res.send(JSON.stringify("Deleted"));
+            	res.send(JSON.stringify("success"));
             }
         });
     });
