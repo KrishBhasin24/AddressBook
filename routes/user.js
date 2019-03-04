@@ -6,7 +6,14 @@ app.get('/', function(req, res, next) {
     req.getConnection(function(error, conn) {
         conn.query('SELECT * FROM addressbook LIMIT 0, 10', function (error, results, fields) {
 	      if (error) throw error;
-	      res.send(JSON.stringify(results));
+
+          if (results.length === 0){
+            res.send(JSON.stringify({message:"No Record Found"}));
+          }
+	      else{
+            res.send(JSON.stringify(results));  
+          }
+          
 	    });
     })
 });
@@ -30,8 +37,9 @@ app.post('/add', function(req, res, next){
 	}
      req.getConnection(function(error, conn) {
             conn.query('INSERT INTO addressbook SET ?', user, function(err, result) {
-            	if (err) {
-            		res.send(JSON.stringify(err));
+            	
+                if (err) {
+            		res.send(err);
             	}
         		else{
         			res.send(JSON.stringify("success"));
@@ -51,7 +59,8 @@ app.get('/view/(:id)', function(req, res, next){
 
 
 app.put('/edit/(:id)', function(req, res, next) {
-   var user = {
+    console.log(req.body);
+	var user = {
         fname: req.body.fname,
         lname: req.body.lname,
         email: req.body.email,
