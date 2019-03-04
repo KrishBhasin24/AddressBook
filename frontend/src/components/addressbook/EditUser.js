@@ -116,9 +116,9 @@ class EditUser extends Component {
                 <form onSubmit={this.handleEdit} >
                     <input type="hidden" name="id" value={this.state.id} />
                     <TextField id="standard-full-width" label="First Name" style={{ margin: 8 }} fullWidth name="fname" margin="normal" onChange={this.handleModify} value={this.state.fname} InputLabelProps={{ shrink: true}} />
-                    {this.validator.message('First Name', this.state.fname, 'required|alpha')}
+                    {this.validator.message('First Name', this.state.fname, 'required|alpha_space')}
                     <TextField id="standard-full-width" label="Last Name" style={{ margin: 8 }} fullWidth name="lname" value={this.state.lname} onChange={this.handleModify} margin="normal" />
-                    {this.validator.message('Last Name', this.state.lname, 'required|alpha')}
+                    {this.validator.message('Last Name', this.state.lname, 'required|alpha_space')}
                     <TextField id="standard-full-width" label="Email" style={{ margin: 8 }} fullWidth name="email" value={this.state.email} onChange={this.handleModify} margin="normal" />
                     {this.validator.message('Email', this.state.email, 'required|email')}
                     <TextField id="standard-full-width" label="Phone" style={{ margin: 8 }} fullWidth margin="normal" value={this.state.phone} onChange={this.handleModify} name="phone" />

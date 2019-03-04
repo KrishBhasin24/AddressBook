@@ -113,7 +113,7 @@ class ListUser extends Component {
                   {message ? (
                     <TableRow className={classes.row} >
                       <CustomTableCell colSpan="5" component="th" scope="row">
-                              "No Record Found"
+                              No Record Found
                       </CustomTableCell>
                     </TableRow>    
                   ) : (

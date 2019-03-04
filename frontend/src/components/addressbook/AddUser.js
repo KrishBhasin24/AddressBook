@@ -91,9 +91,9 @@ class AddUser extends Component {
             <div className="container register-form">
                 <form onSubmit={this.handleSubmit} method="POST" >
                     <TextField id="standard-full-width" label="First Name" style={{ margin: 8 }} fullWidth name="fname" margin="normal" onChange={this.handleModify} />
-                    {this.validator.message('First Name', this.state.fname, 'required|alpha')}
+                    {this.validator.message('First Name', this.state.fname, 'required|alpha_space')}
                     <TextField id="standard-full-width" label="Last Name" style={{ margin: 8 }} fullWidth name="lname" margin="normal" onChange={this.handleModify} />
-                    {this.validator.message('Last Name', this.state.lname, 'required|alpha')}
+                    {this.validator.message('Last Name', this.state.lname, 'required|alpha_space')}
                     <TextField id="standard-full-width" label="Email" style={{ margin: 8 }} fullWidth  name="email" margin="normal" onChange={this.handleModify} />
                     {this.validator.message('Email', this.state.email, 'required|email')}
                     <TextField id="standard-full-width" label="Phone" style={{ margin: 8 }} fullWidth  type="phone" margin="normal" name="phone" value={this.state.phone} onChange={this.handleModify} />
