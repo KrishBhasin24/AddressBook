@@ -47,19 +47,18 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 class ListUser extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            users: []
-        }
-	}
-
-  handleDelete(id,e){
-    e.preventDefault()
-    var value = {
-          id: id,
+  constructor(props) {
+      super(props)
+      this.state = {
+          users: []
       }
-    console.log("http://localhost:3001/user/delete/"+id);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(id){
+    var value = {
+      id: id,
+    }
     fetch("http://localhost:3001/user/delete/"+id, {
         method: 'DELETE',
         headers: {
@@ -71,12 +70,13 @@ class ListUser extends Component {
             alert("Bad response from server");
         }
     }).then(function(val) {
-          alert("User Deleted");
           window.location.reload();
     }).catch(function(err) {
-          console.log(err)
+          alert(err)
     });
   };
+
+  
 
 	componentDidMount() {
         let self = this;
@@ -90,12 +90,13 @@ class ListUser extends Component {
         }).then(function(data) {
             self.setState({users: data});
         }).catch(err => {
-        console.log('caught it!',err);
+        console.log(err);
         })
 	}
 
     render() {
         const { classes } = this.props;
+        const message = this.state.users.message;
         return (
             <div>
              <Table className={classes.table}>
@@ -109,29 +110,39 @@ class ListUser extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                    {this.state.users.map(row =>
-                        <TableRow className={classes.row} key={row.id}>
-                            <CustomTableCell component="th" scope="row">
-                                {row.fname}
-                            </CustomTableCell>
-                            <CustomTableCell align="right">{row.lname}</CustomTableCell>
-                            <CustomTableCell align="right">{row.email}</CustomTableCell>
-                            <CustomTableCell align="right">{row.phone}</CustomTableCell>
-                            <CustomTableCell align="right">
-                                <Link to={{ pathname:'edit',state: { id: row.id}  }} >
-                                    <IconButton aria-label="Edit">
-                                          <EditIcon />
-                                        </IconButton>
+                  {message ? (
+                    <TableRow className={classes.row} >
+                      <CustomTableCell colSpan="5" component="th" scope="row">
+                              "No Record Found"
+                      </CustomTableCell>
+                    </TableRow>    
+                  ) : (
+                    this.state.users.map(row =>
+                      <TableRow className={classes.row} key={row.id}>
+                          <CustomTableCell component="th" scope="row">
+                              {row.fname}
+                          </CustomTableCell>
+                          <CustomTableCell align="right">{row.lname}</CustomTableCell>
+                          <CustomTableCell align="right">{row.email}</CustomTableCell>
+                          <CustomTableCell align="right">{row.phone}</CustomTableCell>
+                          <CustomTableCell align="right">
+                              <Link to={{ pathname:'edit',state: { id: row.id}  }} >
+                                  <IconButton aria-label="Edit">
+                                        <EditIcon />
+                                      </IconButton>
 
-                                </Link>
-                                
-                                <IconButton onClick={this.handleDelete.bind(this, row.id)} aria-label="Delete">
-                                      <DeleteIcon />
-                                </IconButton>
-                                
-                            </CustomTableCell>
-                        </TableRow>
-                     )}
+                              </Link>
+                              
+                              <IconButton onClick={() => { if (window.confirm('Are you sure you wish to delete this Address?')) this.handleDelete(row.id) } } aria-label="Delete">
+                                    <DeleteIcon />
+                              </IconButton>
+                              
+                          </CustomTableCell>
+                      </TableRow>
+                    )
+                  )}
+                
+                   
                 </TableBody>
             </Table>
             <Link to={{ pathname:'add' }} >
