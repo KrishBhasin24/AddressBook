@@ -20,6 +20,6 @@ Step 2: Update database credential (host,username,password,database) in config.j
 
 Step 3: Goto root folder and " run npm install ". It will install required package for node.js
 
-Step 4: Goto frontend folder and run " run npm install ". it will install required pacakge for react application.
+Step 4: Goto frontend folder and run " run npm install " again. it will install required package for react application.
 
-Step 5: Run command " npm run dev ". It will run the complete project including node and react.
+Step 5: Run command " npm run dev ". It will run the complete project including node and react using Mysql DB.
